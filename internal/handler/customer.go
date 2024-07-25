@@ -44,6 +44,15 @@ func (h *CustomerHandler) Add(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	v := utils.NewValidator()
+
+	v.Check(input.Username != "", "username", "username is required")
+
+	if !v.Valid() {
+		utils.FailedValidationResponse(w, r, v.Errors)
+		return
+	}
+
 	customer, err := h.usecase.Add(&input)
 	if err != nil {
 		switch {
