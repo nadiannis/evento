@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/nadiannis/evento/internal/domain/response"
 	"github.com/rs/zerolog/log"
@@ -17,8 +18,9 @@ var (
 
 func errorResponse(w http.ResponseWriter, r *http.Request, status int, message any) {
 	res := response.ErrorResponse{
-		Status: "error",
-		Error:  message,
+		Status:  "error",
+		Message: strings.ToLower(http.StatusText(status)),
+		Detail:  message,
 	}
 
 	err := WriteJSON(w, status, res, nil)
