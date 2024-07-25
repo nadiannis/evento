@@ -6,3 +6,7 @@ type ICustomerRepository interface {
 	GetAll() []*domain.Customer
 	Add(user *domain.Customer) (*domain.Customer, error)
 }
+
+type IEventRepository interface {
+	GetAll() []*domain.Event
+}

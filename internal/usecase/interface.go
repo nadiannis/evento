@@ -9,3 +9,7 @@ type ICustomerUsecase interface {
 	GetAll() []*domain.Customer
 	Add(input *request.CustomerRequest) (*domain.Customer, error)
 }
+
+type IEventUsecase interface {
+	GetAll() []*domain.Event
+}
