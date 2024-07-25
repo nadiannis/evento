@@ -21,3 +21,7 @@ type ITicketTypeRepository interface {
 type ITicketRepository interface {
 	Add(ticket *domain.Ticket) *domain.Ticket
 }
+
+type IOrderRepository interface {
+	GetAll() []*domain.Order
+}

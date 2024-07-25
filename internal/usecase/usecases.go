@@ -7,6 +7,7 @@ type Usecases struct {
 	Events      IEventUsecase
 	TicketTypes ITicketTypeUsecase
 	Tickets     ITicketUsecase
+	Orders      IOrderUsecase
 }
 
 func NewUsecases(repositories repository.Repositories) Usecases {
@@ -15,5 +16,6 @@ func NewUsecases(repositories repository.Repositories) Usecases {
 		Events:      NewEventUsecase(repositories.Events),
 		TicketTypes: NewTicketTypeUsecase(repositories.TicketTypes),
 		Tickets:     NewTicketUsecase(repositories.Tickets, repositories.Events),
+		Orders:      NewOrderUsecase(repositories.Orders),
 	}
 }
