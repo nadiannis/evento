@@ -25,6 +25,9 @@ func main() {
 		handlers: handlers,
 	}
 
+	log.Info().Msg("add ticket types")
+	prepopulateTicketTypes(usecases.TicketTypes)
+
 	log.Info().Msg("add events")
 	prepopulateEvents(usecases.Events)
 

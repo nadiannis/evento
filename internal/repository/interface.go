@@ -11,3 +11,7 @@ type IEventRepository interface {
 	GetAll() []*domain.Event
 	Add(event *domain.Event) *domain.Event
 }
+
+type ITicketTypeRepository interface {
+	Add(ticketType *domain.TicketType) (*domain.TicketType, error)
+}
