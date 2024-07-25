@@ -33,3 +33,20 @@ func (r *CustomerRepository) Add(customer *domain.Customer) (*domain.Customer, e
 	r.db[customer.ID] = customer
 	return customer, nil
 }
+
+func (r *CustomerRepository) GetByID(customerID string) (*domain.Customer, error) {
+	if customer, exists := r.db[customerID]; exists {
+		return customer, nil
+	}
+
+	return nil, utils.ErrCustomerNotFound
+}
+
+func (r *CustomerRepository) AddOrder(customerID string, order *domain.Order) error {
+	if customer, exists := r.db[customerID]; exists {
+		customer.Orders = append(customer.Orders, order)
+		return nil
+	}
+
+	return utils.ErrCustomerNotFound
+}

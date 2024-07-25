@@ -25,3 +25,13 @@ func (r *TicketTypeRepository) Add(ticketType *domain.TicketType) (*domain.Ticke
 	r.db[ticketType.ID] = ticketType
 	return ticketType, nil
 }
+
+func (r *TicketTypeRepository) GetByName(ticketTypeName domain.TicketTypeName) (*domain.TicketType, error) {
+	for _, ticketType := range r.db {
+		if ticketType.Name == ticketTypeName {
+			return ticketType, nil
+		}
+	}
+
+	return nil, utils.ErrTicketTypeNotFound
+}

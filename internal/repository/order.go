@@ -19,3 +19,8 @@ func (r *OrderRepository) GetAll() []*domain.Order {
 	}
 	return orders
 }
+
+func (r *OrderRepository) Add(order *domain.Order) *domain.Order {
+	r.db[order.ID] = order
+	return order
+}
