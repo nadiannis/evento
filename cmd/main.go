@@ -4,16 +4,25 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/nadiannis/evento/internal/handler"
+	"github.com/nadiannis/evento/internal/repository"
+	"github.com/nadiannis/evento/internal/usecase"
 	"github.com/rs/zerolog/log"
 )
 
 type application struct {
-	port int
+	port     int
+	handlers handler.Handlers
 }
 
 func main() {
+	repos := repository.NewRepositories()
+	usecases := usecase.NewUsecases(repos)
+	handlers := handler.NewHandlers(usecases)
+
 	app := &application{
-		port: 8080,
+		port:     8080,
+		handlers: handlers,
 	}
 
 	srv := &http.Server{

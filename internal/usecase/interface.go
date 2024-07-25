@@ -1,0 +1,11 @@
+package usecase
+
+import (
+	"github.com/nadiannis/evento/internal/domain"
+	"github.com/nadiannis/evento/internal/domain/request"
+)
+
+type ICustomerUsecase interface {
+	GetAll() []*domain.Customer
+	Add(input *request.CustomerRequest) (*domain.Customer, error)
+}

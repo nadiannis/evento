@@ -12,5 +12,8 @@ func (app *application) routes() http.Handler {
 		fmt.Fprintf(w, "API is running on port %d", app.port)
 	})
 
+	mux.HandleFunc("GET /api/customers", app.handlers.Customers.GetAll)
+	mux.HandleFunc("POST /api/customers", app.handlers.Customers.Add)
+
 	return requestLogger(mux)
 }
