@@ -11,9 +11,13 @@ import (
 )
 
 var (
-	ErrEventNotFound           = errors.New("event not found")
-	ErrCustomerAlreadyExists   = errors.New("customer already exists")
-	ErrTicketTypeAlreadyExists = errors.New("ticket type already exists")
+	ErrCustomerNotFound           = errors.New("customer not found")
+	ErrTicketTypeNotFound         = errors.New("ticket type not found")
+	ErrTicketNotFound             = errors.New("ticket not found")
+	ErrEventNotFound              = errors.New("event not found")
+	ErrCustomerAlreadyExists      = errors.New("customer already exists")
+	ErrTicketTypeAlreadyExists    = errors.New("ticket type already exists")
+	ErrInsufficientTicketQuantity = errors.New("insufficient ticket quantity")
 )
 
 func errorResponse(w http.ResponseWriter, r *http.Request, status int, message any) {
