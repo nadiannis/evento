@@ -39,3 +39,12 @@ func (u *TicketUsecase) Add(input *request.TicketRequest) (*domain.Ticket, error
 
 	return savedTicket, nil
 }
+
+func (u *TicketUsecase) GetByID(ticketID string) (*domain.Ticket, error) {
+	ticket, err := u.ticketRepository.GetByID(ticketID)
+	if err != nil {
+		return nil, err
+	}
+
+	return ticket, nil
+}

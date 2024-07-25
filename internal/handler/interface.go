@@ -14,6 +14,7 @@ type IEventHandler interface {
 
 type ITicketHandler interface {
 	GetAll(w http.ResponseWriter, r *http.Request)
+	GetByID(w http.ResponseWriter, r *http.Request)
 }
 
 type IOrderHandler interface {

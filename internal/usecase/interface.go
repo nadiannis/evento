@@ -23,6 +23,7 @@ type ITicketTypeUsecase interface {
 type ITicketUsecase interface {
 	GetAll() []*domain.Ticket
 	Add(input *request.TicketRequest) (*domain.Ticket, error)
+	GetByID(ticketID string) (*domain.Ticket, error)
 }
 
 type IOrderUsecase interface {
