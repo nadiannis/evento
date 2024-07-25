@@ -25,6 +25,9 @@ func main() {
 		handlers: handlers,
 	}
 
+	log.Info().Msg("add events")
+	prepopulateEvents(usecases.Events)
+
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", app.port),
 		Handler: app.routes(),

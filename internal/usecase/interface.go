@@ -12,4 +12,5 @@ type ICustomerUsecase interface {
 
 type IEventUsecase interface {
 	GetAll() []*domain.Event
+	Add(input *request.EventRequest) *domain.Event
 }

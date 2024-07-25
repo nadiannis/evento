@@ -19,3 +19,8 @@ func (r *EventRepository) GetAll() []*domain.Event {
 	}
 	return events
 }
+
+func (r *EventRepository) Add(event *domain.Event) *domain.Event {
+	r.db[event.ID] = event
+	return event
+}

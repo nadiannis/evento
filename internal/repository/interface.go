@@ -9,4 +9,5 @@ type ICustomerRepository interface {
 
 type IEventRepository interface {
 	GetAll() []*domain.Event
+	Add(event *domain.Event) *domain.Event
 }
