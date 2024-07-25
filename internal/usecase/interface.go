@@ -26,4 +26,5 @@ type ITicketUsecase interface {
 
 type IOrderUsecase interface {
 	GetAll() []*domain.Order
+	Add(input *request.OrderRequest) (*domain.Order, error)
 }
