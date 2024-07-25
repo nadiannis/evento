@@ -15,6 +15,14 @@ func NewTicketRepository() ITicketRepository {
 	}
 }
 
+func (r *TicketRepository) GetAll() []*domain.Ticket {
+	tickets := make([]*domain.Ticket, 0)
+	for _, ticket := range r.db {
+		tickets = append(tickets, ticket)
+	}
+	return tickets
+}
+
 func (r *TicketRepository) Add(ticket *domain.Ticket) *domain.Ticket {
 	r.db[ticket.ID] = ticket
 	return ticket

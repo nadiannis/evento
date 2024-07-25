@@ -16,6 +16,11 @@ func NewUsecases(repositories repository.Repositories) Usecases {
 		Events:      NewEventUsecase(repositories.Events),
 		TicketTypes: NewTicketTypeUsecase(repositories.TicketTypes),
 		Tickets:     NewTicketUsecase(repositories.Tickets, repositories.Events),
-		Orders:      NewOrderUsecase(repositories.Orders, repositories.Customers, repositories.Tickets, repositories.TicketTypes),
+		Orders: NewOrderUsecase(
+			repositories.Orders,
+			repositories.Customers,
+			repositories.Tickets,
+			repositories.TicketTypes,
+		),
 	}
 }

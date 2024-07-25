@@ -19,6 +19,10 @@ func NewTicketUsecase(ticketRepository repository.ITicketRepository, eventReposi
 	}
 }
 
+func (u *TicketUsecase) GetAll() []*domain.Ticket {
+	return u.ticketRepository.GetAll()
+}
+
 func (u *TicketUsecase) Add(input *request.TicketRequest) (*domain.Ticket, error) {
 	ticket := &domain.Ticket{
 		ID:       uuid.NewString(),
