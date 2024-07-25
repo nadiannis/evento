@@ -48,3 +48,10 @@ func NotFoundResponse(w http.ResponseWriter, r *http.Request, err error) {
 
 	errorResponse(w, r, http.StatusNotFound, err.Error())
 }
+
+func FailedValidationResponse(w http.ResponseWriter, r *http.Request, errors map[string]string) {
+	req := fmt.Sprintf("%s %s %s", r.Proto, r.Method, r.URL.RequestURI())
+	log.Error().Str("request", req).Msg("invalid request body")
+
+	errorResponse(w, r, http.StatusUnprocessableEntity, errors)
+}
