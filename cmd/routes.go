@@ -16,6 +16,7 @@ func (app *application) routes() http.Handler {
 	mux.HandleFunc("POST /api/customers", app.handlers.Customers.Add)
 
 	mux.HandleFunc("GET /api/events", app.handlers.Events.GetAll)
+	mux.HandleFunc("GET /api/events/{id}", app.handlers.Events.GetByID)
 
 	return requestLogger(mux)
 }

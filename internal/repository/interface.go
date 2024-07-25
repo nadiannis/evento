@@ -10,6 +10,7 @@ type ICustomerRepository interface {
 type IEventRepository interface {
 	GetAll() []*domain.Event
 	Add(event *domain.Event) *domain.Event
+	GetByID(eventID string) (*domain.Event, error)
 	AddTicket(eventID string, ticket *domain.Ticket) (*domain.Ticket, error)
 }
 

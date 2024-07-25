@@ -28,6 +28,14 @@ func (r *EventRepository) Add(event *domain.Event) *domain.Event {
 	return event
 }
 
+func (r *EventRepository) GetByID(eventID string) (*domain.Event, error) {
+	if event, exists := r.db[eventID]; exists {
+		return event, nil
+	}
+
+	return nil, utils.ErrEventNotFound
+}
+
 func (r *EventRepository) AddTicket(eventID string, ticket *domain.Ticket) (*domain.Ticket, error) {
 	if event, exists := r.db[eventID]; exists {
 		event.Tickets[ticket.Type] = ticket

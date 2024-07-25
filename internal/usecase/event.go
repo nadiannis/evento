@@ -31,3 +31,12 @@ func (u *EventUsecase) Add(input *request.EventRequest) *domain.Event {
 
 	return u.repository.Add(event)
 }
+
+func (u *EventUsecase) GetByID(eventID string) (*domain.Event, error) {
+	event, err := u.repository.GetByID(eventID)
+	if err != nil {
+		return nil, err
+	}
+
+	return event, nil
+}
