@@ -10,7 +10,9 @@ import (
 )
 
 var (
-	ErrCustomerAlreadyExists = errors.New("customer already exists")
+	ErrEventNotFound           = errors.New("event not found")
+	ErrCustomerAlreadyExists   = errors.New("customer already exists")
+	ErrTicketTypeAlreadyExists = errors.New("ticket type already exists")
 )
 
 func errorResponse(w http.ResponseWriter, r *http.Request, status int, message any) {

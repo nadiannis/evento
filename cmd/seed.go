@@ -3,9 +3,21 @@ package main
 import (
 	"time"
 
+	"github.com/nadiannis/evento/internal/domain"
 	"github.com/nadiannis/evento/internal/domain/request"
 	"github.com/nadiannis/evento/internal/usecase"
 )
+
+var ticketTypeInputs = []*request.TicketTypeRequest{
+	{
+		Name:  "VIP",
+		Price: 5000,
+	},
+	{
+		Name:  "CAT 1",
+		Price: 250,
+	},
+}
 
 var eventInputs = []*request.EventRequest{
 	{
@@ -30,8 +42,27 @@ var eventInputs = []*request.EventRequest{
 	},
 }
 
-func prepopulateEvents(usecase usecase.IEventUsecase) {
+func prepopulateTicketTypes(usecase usecase.ITicketTypeUsecase) {
+	for _, ticketTypeInput := range ticketTypeInputs {
+		usecase.Add(ticketTypeInput)
+	}
+}
+
+func prepopulateEventsAndTickets(eventUsecase usecase.IEventUsecase, ticketUsecase usecase.ITicketUsecase) {
 	for _, eventInput := range eventInputs {
-		usecase.Add(eventInput)
+		event := eventUsecase.Add(eventInput)
+
+		vipTicket := &request.TicketRequest{
+			EventID:  event.ID,
+			Type:     domain.TicketTypeVIP,
+			Quantity: 10,
+		}
+		cat1Ticket := &request.TicketRequest{
+			EventID:  event.ID,
+			Type:     domain.TicketTypeCAT1,
+			Quantity: 100,
+		}
+		ticketUsecase.Add(vipTicket)
+		ticketUsecase.Add(cat1Ticket)
 	}
 }

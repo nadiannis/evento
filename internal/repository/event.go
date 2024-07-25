@@ -1,6 +1,9 @@
 package repository
 
-import "github.com/nadiannis/evento/internal/domain"
+import (
+	"github.com/nadiannis/evento/internal/domain"
+	"github.com/nadiannis/evento/internal/utils"
+)
 
 type EventRepository struct {
 	db map[string]*domain.Event
@@ -23,4 +26,13 @@ func (r *EventRepository) GetAll() []*domain.Event {
 func (r *EventRepository) Add(event *domain.Event) *domain.Event {
 	r.db[event.ID] = event
 	return event
+}
+
+func (r *EventRepository) AddTicket(eventID string, ticket *domain.Ticket) (*domain.Ticket, error) {
+	if event, exists := r.db[eventID]; exists {
+		event.Tickets[ticket.Type] = ticket
+		return ticket, nil
+	}
+
+	return nil, utils.ErrEventNotFound
 }
