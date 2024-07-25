@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/nadiannis/evento/internal/domain/response"
@@ -28,6 +29,32 @@ func (h *EventHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err := utils.WriteJSON(w, http.StatusOK, res, nil)
+	if err != nil {
+		utils.ServerErrorResponse(w, r, err)
+	}
+}
+
+func (h *EventHandler) GetByID(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+
+	event, err := h.usecase.GetByID(id)
+	if err != nil {
+		switch {
+		case errors.Is(err, utils.ErrEventNotFound):
+			utils.NotFoundResponse(w, r, err)
+		default:
+			utils.ServerErrorResponse(w, r, err)
+		}
+		return
+	}
+
+	res := response.SuccessResponse{
+		Status:  response.Success,
+		Message: "event retrieved successfully",
+		Data:    event,
+	}
+
+	err = utils.WriteJSON(w, http.StatusOK, res, nil)
 	if err != nil {
 		utils.ServerErrorResponse(w, r, err)
 	}

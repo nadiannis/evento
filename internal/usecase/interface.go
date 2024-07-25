@@ -13,6 +13,7 @@ type ICustomerUsecase interface {
 type IEventUsecase interface {
 	GetAll() []*domain.Event
 	Add(input *request.EventRequest) *domain.Event
+	GetByID(eventID string) (*domain.Event, error)
 }
 
 type ITicketTypeUsecase interface {
