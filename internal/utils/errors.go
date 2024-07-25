@@ -10,6 +10,7 @@ import (
 )
 
 var (
+	ErrEventNotFound           = errors.New("event not found")
 	ErrCustomerAlreadyExists   = errors.New("customer already exists")
 	ErrTicketTypeAlreadyExists = errors.New("ticket type already exists")
 )

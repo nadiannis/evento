@@ -28,8 +28,8 @@ func main() {
 	log.Info().Msg("add ticket types")
 	prepopulateTicketTypes(usecases.TicketTypes)
 
-	log.Info().Msg("add events")
-	prepopulateEvents(usecases.Events)
+	log.Info().Msg("add events and tickets")
+	prepopulateEventsAndTickets(usecases.Events, usecases.Tickets)
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", app.port),

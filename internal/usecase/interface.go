@@ -18,3 +18,7 @@ type IEventUsecase interface {
 type ITicketTypeUsecase interface {
 	Add(input *request.TicketTypeRequest) (*domain.TicketType, error)
 }
+
+type ITicketUsecase interface {
+	Add(input *request.TicketRequest) (*domain.Ticket, error)
+}

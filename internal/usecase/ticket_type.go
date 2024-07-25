@@ -23,5 +23,6 @@ func (u *TicketTypeUsecase) Add(input *request.TicketTypeRequest) (*domain.Ticke
 		Name:  input.Name,
 		Price: input.Price,
 	}
+
 	return u.repository.Add(ticketType)
 }

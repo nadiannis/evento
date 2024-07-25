@@ -4,6 +4,7 @@ type Repositories struct {
 	Customers   ICustomerRepository
 	Events      IEventRepository
 	TicketTypes ITicketTypeRepository
+	Tickets     ITicketRepository
 }
 
 func NewRepositories() Repositories {
@@ -11,5 +12,6 @@ func NewRepositories() Repositories {
 		Customers:   NewCustomerRepository(),
 		Events:      NewEventRepository(),
 		TicketTypes: NewTicketTypeRepository(),
+		Tickets:     NewTicketRepository(),
 	}
 }
