@@ -9,7 +9,7 @@ func (app *application) routes() http.Handler {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /api", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "API is running on port %d", app.port)
+		fmt.Fprintf(w, "API is running on port %d\n", app.port)
 	})
 
 	mux.HandleFunc("GET /api/customers", app.handlers.Customers.GetAll)
