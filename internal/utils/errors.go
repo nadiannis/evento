@@ -28,39 +28,28 @@ func errorResponse(w http.ResponseWriter, r *http.Request, status int, message a
 		Detail:  message,
 	}
 
-	err := WriteJSON(w, status, res, nil)
+	err := WriteJSON(w, r, status, res, nil)
 	if err != nil {
-		req := fmt.Sprint(r.Method, " ", r.URL.String())
-		log.Error().Str("request", req).Err(err)
+		req := fmt.Sprintf("%s %s %s", r.Proto, r.Method, r.URL.RequestURI())
+		log.Error().Str("request", req).Msg(err.Error())
+
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 }
 
 func ServerErrorResponse(w http.ResponseWriter, r *http.Request, err error) {
-	req := fmt.Sprintf("%s %s %s", r.Proto, r.Method, r.URL.RequestURI())
-	log.Error().Str("request", req).Msg(err.Error())
-
 	message := "server encountered a problem"
 	errorResponse(w, r, http.StatusInternalServerError, message)
 }
 
 func BadRequestResponse(w http.ResponseWriter, r *http.Request, err error) {
-	req := fmt.Sprintf("%s %s %s", r.Proto, r.Method, r.URL.RequestURI())
-	log.Error().Str("request", req).Msg(err.Error())
-
 	errorResponse(w, r, http.StatusBadRequest, err.Error())
 }
 
 func NotFoundResponse(w http.ResponseWriter, r *http.Request, err error) {
-	req := fmt.Sprintf("%s %s %s", r.Proto, r.Method, r.URL.RequestURI())
-	log.Error().Str("request", req).Msg(err.Error())
-
 	errorResponse(w, r, http.StatusNotFound, err.Error())
 }
 
 func FailedValidationResponse(w http.ResponseWriter, r *http.Request, errors map[string]string) {
-	req := fmt.Sprintf("%s %s %s", r.Proto, r.Method, r.URL.RequestURI())
-	log.Error().Str("request", req).Msg("invalid request body")
-
 	errorResponse(w, r, http.StatusUnprocessableEntity, errors)
 }

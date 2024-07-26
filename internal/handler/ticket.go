@@ -28,7 +28,7 @@ func (h *TicketHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 		Data:    tickets,
 	}
 
-	err := utils.WriteJSON(w, http.StatusOK, res, nil)
+	err := utils.WriteJSON(w, r, http.StatusOK, res, nil)
 	if err != nil {
 		utils.ServerErrorResponse(w, r, err)
 	}
@@ -54,7 +54,7 @@ func (h *TicketHandler) GetByID(w http.ResponseWriter, r *http.Request) {
 		Data:    ticket,
 	}
 
-	err = utils.WriteJSON(w, http.StatusOK, res, nil)
+	err = utils.WriteJSON(w, r, http.StatusOK, res, nil)
 	if err != nil {
 		utils.ServerErrorResponse(w, r, err)
 	}
