@@ -1,9 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-
 	"github.com/nadiannis/evento/internal/handler"
 	"github.com/nadiannis/evento/internal/repository"
 	"github.com/nadiannis/evento/internal/usecase"
@@ -31,13 +28,7 @@ func main() {
 	log.Info().Msg("add events and tickets")
 	prepopulateEventsAndTickets(usecases.Events, usecases.Tickets)
 
-	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%d", app.port),
-		Handler: app.routes(),
-	}
-
-	log.Info().Msg("starting server on " + srv.Addr)
-	err := srv.ListenAndServe()
+	err := app.serve()
 	if err != nil {
 		log.Fatal().Msg(err.Error())
 	}

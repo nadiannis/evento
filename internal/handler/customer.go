@@ -3,6 +3,7 @@ package handler
 import (
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/nadiannis/evento/internal/domain/request"
 	"github.com/nadiannis/evento/internal/domain/response"
@@ -22,6 +23,8 @@ func NewCustomerHandler(usecase usecase.ICustomerUsecase) ICustomerHandler {
 
 func (h *CustomerHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	customers := h.usecase.GetAll()
+
+	time.Sleep(5 * time.Second)
 
 	res := response.SuccessResponse{
 		Status:  response.Success,
