@@ -10,11 +10,11 @@ import (
 
 var ticketTypeInputs = []*request.TicketTypeRequest{
 	{
-		Name:  "VIP",
+		Name:  domain.TicketTypeVIP,
 		Price: 5000,
 	},
 	{
-		Name:  "CAT 1",
+		Name:  domain.TicketTypeVIP,
 		Price: 250,
 	},
 }

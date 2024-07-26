@@ -17,6 +17,7 @@ var (
 	ErrEventNotFound              = errors.New("event not found")
 	ErrCustomerAlreadyExists      = errors.New("customer already exists")
 	ErrTicketTypeAlreadyExists    = errors.New("ticket type already exists")
+	ErrTicketAlreadyExists        = errors.New("ticket already exists for the event")
 	ErrInsufficientTicketQuantity = errors.New("insufficient ticket quantity")
 )
 

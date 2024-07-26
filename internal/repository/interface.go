@@ -23,7 +23,7 @@ type ITicketTypeRepository interface {
 
 type ITicketRepository interface {
 	GetAll() []*domain.Ticket
-	Add(ticket *domain.Ticket) *domain.Ticket
+	Add(ticket *domain.Ticket) (*domain.Ticket, error)
 	GetByID(ticketID string) (*domain.Ticket, error)
 	DeductQuantity(ticketID string, quantity int) error
 }

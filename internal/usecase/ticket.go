@@ -31,8 +31,12 @@ func (u *TicketUsecase) Add(input *request.TicketRequest) (*domain.Ticket, error
 		Quantity: input.Quantity,
 	}
 
-	savedTicket := u.ticketRepository.Add(ticket)
-	_, err := u.eventRepository.AddTicket(savedTicket.EventID, savedTicket)
+	savedTicket, err := u.ticketRepository.Add(ticket)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = u.eventRepository.AddTicket(savedTicket.EventID, savedTicket)
 	if err != nil {
 		return nil, err
 	}
