@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/nadiannis/evento/internal/domain/response"
+	"github.com/nadiannis/evento/internal/utils"
 	"github.com/rs/zerolog/log"
 )
 
@@ -35,20 +36,23 @@ func requestLogger(next http.Handler) http.Handler {
 		next.ServeHTTP(rw, r)
 
 		duration := fmt.Sprintf("%dns", time.Since(start).Nanoseconds())
-
+		request := fmt.Sprintf("%s %s %s", r.Proto, r.Method, r.URL.RequestURI())
+		message := utils.GetLogMessage(r.Context())
+		
 		status := response.Success
+		logEvent := log.Info()
 		if rw.statusCode >= 400 {
 			status = response.Error
+			logEvent = log.Error()
 		}
 
-		request := fmt.Sprintf("%s %s %s", r.Proto, r.Method, r.URL.RequestURI())
-
-		log.Info().
+		logEvent.
 			Str("request", request).
 			Str("status", string(status)).
 			Int("status_code", rw.statusCode).
 			Str("status_description", strings.ToLower(http.StatusText(rw.statusCode))).
+			Interface("message", message).
 			Str("process_time", duration).
-			Msg("request completed")
+			Send()
 	})
 }

@@ -23,7 +23,7 @@ func ReadJSON(r *http.Request, dst any) error {
 	return nil
 }
 
-func WriteJSON(w http.ResponseWriter, status int, data response.Response, headers http.Header) error {
+func WriteJSON(w http.ResponseWriter, r *http.Request, status int, data response.Response, headers http.Header) error {
 	jsonBytes, err := json.MarshalIndent(data, "", "\t")
 	if err != nil {
 		return err
@@ -37,6 +37,18 @@ func WriteJSON(w http.ResponseWriter, status int, data response.Response, header
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	w.Write(jsonBytes)
+
+	var message any
+	switch v := data.(type) {
+	case response.SuccessResponse:
+		message = v.Message
+	case response.ErrorResponse:
+		message = v.Detail
+	default:
+		message = "request processed"
+	}
+
+	*r = *r.WithContext(SetLogMessage(r.Context(), message))
 
 	return nil
 }
