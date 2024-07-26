@@ -28,7 +28,7 @@ func (h *EventHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 		Data:    events,
 	}
 
-	err := utils.WriteJSON(w, http.StatusOK, res, nil)
+	err := utils.WriteJSON(w, r, http.StatusOK, res, nil)
 	if err != nil {
 		utils.ServerErrorResponse(w, r, err)
 	}
@@ -54,7 +54,7 @@ func (h *EventHandler) GetByID(w http.ResponseWriter, r *http.Request) {
 		Data:    event,
 	}
 
-	err = utils.WriteJSON(w, http.StatusOK, res, nil)
+	err = utils.WriteJSON(w, r, http.StatusOK, res, nil)
 	if err != nil {
 		utils.ServerErrorResponse(w, r, err)
 	}

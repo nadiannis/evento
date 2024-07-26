@@ -29,7 +29,7 @@ func (h *OrderHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 		Data:    orders,
 	}
 
-	err := utils.WriteJSON(w, http.StatusOK, res, nil)
+	err := utils.WriteJSON(w, r, http.StatusOK, res, nil)
 	if err != nil {
 		utils.ServerErrorResponse(w, r, err)
 	}
@@ -74,7 +74,7 @@ func (h *OrderHandler) Add(w http.ResponseWriter, r *http.Request) {
 		Data:    order,
 	}
 
-	err = utils.WriteJSON(w, http.StatusCreated, res, nil)
+	err = utils.WriteJSON(w, r, http.StatusCreated, res, nil)
 	if err != nil {
 		utils.ServerErrorResponse(w, r, err)
 	}

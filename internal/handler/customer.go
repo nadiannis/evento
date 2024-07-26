@@ -24,7 +24,7 @@ func NewCustomerHandler(usecase usecase.ICustomerUsecase) ICustomerHandler {
 func (h *CustomerHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	customers := h.usecase.GetAll()
 
-	time.Sleep(5 * time.Second)
+	time.Sleep(2 * time.Second) // Simulate real processing time
 
 	res := response.SuccessResponse{
 		Status:  response.Success,
@@ -32,7 +32,7 @@ func (h *CustomerHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 		Data:    customers,
 	}
 
-	err := utils.WriteJSON(w, http.StatusOK, res, nil)
+	err := utils.WriteJSON(w, r, http.StatusOK, res, nil)
 	if err != nil {
 		utils.ServerErrorResponse(w, r, err)
 	}
@@ -73,7 +73,7 @@ func (h *CustomerHandler) Add(w http.ResponseWriter, r *http.Request) {
 		Data:    customer,
 	}
 
-	err = utils.WriteJSON(w, http.StatusCreated, res, nil)
+	err = utils.WriteJSON(w, r, http.StatusCreated, res, nil)
 	if err != nil {
 		utils.ServerErrorResponse(w, r, err)
 	}
