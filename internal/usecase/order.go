@@ -59,12 +59,12 @@ func (u *OrderUsecase) Add(input *request.OrderRequest) (*domain.Order, error) {
 		CreatedAt:  time.Now(),
 	})
 
-	err = u.ticketRepository.DeductQuantity(ticket.ID, order.Quantity)
+	err = u.customerRepository.AddOrder(customer.ID, order)
 	if err != nil {
 		return nil, err
 	}
 
-	err = u.customerRepository.AddOrder(customer.ID, order)
+	err = u.ticketRepository.DeductQuantity(ticket.ID, order.Quantity)
 	if err != nil {
 		return nil, err
 	}

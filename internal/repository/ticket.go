@@ -15,9 +15,23 @@ func NewTicketRepository() ITicketRepository {
 	}
 }
 
-func (r *TicketRepository) Add(ticket *domain.Ticket) *domain.Ticket {
+func (r *TicketRepository) GetAll() []*domain.Ticket {
+	tickets := make([]*domain.Ticket, 0)
+	for _, ticket := range r.db {
+		tickets = append(tickets, ticket)
+	}
+	return tickets
+}
+
+func (r *TicketRepository) Add(ticket *domain.Ticket) (*domain.Ticket, error) {
+	for _, t := range r.db {
+		if t.EventID == ticket.EventID && t.Type == ticket.Type {
+			return nil, utils.ErrTicketAlreadyExists
+		}
+	}
+
 	r.db[ticket.ID] = ticket
-	return ticket
+	return ticket, nil
 }
 
 func (r *TicketRepository) GetByID(ticketID string) (*domain.Ticket, error) {

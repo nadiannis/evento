@@ -19,6 +19,10 @@ func NewTicketUsecase(ticketRepository repository.ITicketRepository, eventReposi
 	}
 }
 
+func (u *TicketUsecase) GetAll() []*domain.Ticket {
+	return u.ticketRepository.GetAll()
+}
+
 func (u *TicketUsecase) Add(input *request.TicketRequest) (*domain.Ticket, error) {
 	ticket := &domain.Ticket{
 		ID:       uuid.NewString(),
@@ -27,11 +31,24 @@ func (u *TicketUsecase) Add(input *request.TicketRequest) (*domain.Ticket, error
 		Quantity: input.Quantity,
 	}
 
-	savedTicket := u.ticketRepository.Add(ticket)
-	_, err := u.eventRepository.AddTicket(savedTicket.EventID, savedTicket)
+	savedTicket, err := u.ticketRepository.Add(ticket)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = u.eventRepository.AddTicket(savedTicket.EventID, savedTicket)
 	if err != nil {
 		return nil, err
 	}
 
 	return savedTicket, nil
+}
+
+func (u *TicketUsecase) GetByID(ticketID string) (*domain.Ticket, error) {
+	ticket, err := u.ticketRepository.GetByID(ticketID)
+	if err != nil {
+		return nil, err
+	}
+
+	return ticket, nil
 }
