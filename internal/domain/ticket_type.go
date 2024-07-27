@@ -3,8 +3,8 @@ package domain
 type TicketTypeName string
 
 var (
-	TicketTypeVIP  TicketTypeName = "VIP"
-	TicketTypeCAT1 TicketTypeName = "CAT 1"
+	TicketTypeVIP  TicketTypeName = "vip"
+	TicketTypeCAT1 TicketTypeName = "cat1"
 )
 
 type TicketType struct {
