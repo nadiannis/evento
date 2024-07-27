@@ -8,6 +8,7 @@ import (
 type ICustomerUsecase interface {
 	GetAll() []*domain.Customer
 	Add(input *request.CustomerRequest) (*domain.Customer, error)
+	AddBalance(customerID string, input *request.CustomerBalanceRequest) (*domain.Customer, error)
 }
 
 type IEventUsecase interface {

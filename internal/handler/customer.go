@@ -50,6 +50,7 @@ func (h *CustomerHandler) Add(w http.ResponseWriter, r *http.Request) {
 	v := utils.NewValidator()
 
 	v.Check(input.Username != "", "username", "username is required")
+	v.Check(input.Balance >= 0, "balance", "balance should not be a negative number")
 
 	if !v.Valid() {
 		utils.FailedValidationResponse(w, r, v.Errors)
@@ -74,6 +75,49 @@ func (h *CustomerHandler) Add(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = utils.WriteJSON(w, r, http.StatusCreated, res, nil)
+	if err != nil {
+		utils.ServerErrorResponse(w, r, err)
+	}
+}
+
+func (h *CustomerHandler) AddBalance(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+
+	var input request.CustomerBalanceRequest
+
+	err := utils.ReadJSON(r, &input)
+	if err != nil {
+		utils.BadRequestResponse(w, r, err)
+		return
+	}
+
+	v := utils.NewValidator()
+
+	v.Check(input.Balance > 0, "balance", "balance should be greater than 0")
+
+	if !v.Valid() {
+		utils.FailedValidationResponse(w, r, v.Errors)
+		return
+	}
+
+	customer, err := h.usecase.AddBalance(id, &input)
+	if err != nil {
+		switch {
+		case errors.Is(err, utils.ErrCustomerNotFound):
+			utils.NotFoundResponse(w, r, err)
+		default:
+			utils.ServerErrorResponse(w, r, err)
+		}
+		return
+	}
+
+	res := response.SuccessResponse{
+		Status:  response.Success,
+		Message: "customer balance added successfully",
+		Data:    customer,
+	}
+
+	err = utils.WriteJSON(w, r, http.StatusOK, res, nil)
 	if err != nil {
 		utils.ServerErrorResponse(w, r, err)
 	}

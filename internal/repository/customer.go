@@ -50,3 +50,29 @@ func (r *CustomerRepository) AddOrder(customerID string, order *domain.Order) er
 
 	return utils.ErrCustomerNotFound
 }
+
+func (r *CustomerRepository) AddBalance(customerID string, amount float64) error {
+	customer, exists := r.db[customerID]
+	if !exists {
+		return utils.ErrCustomerNotFound
+	}
+
+	customer.Balance += amount
+	r.db[customerID] = customer
+	return nil
+}
+
+func (r *CustomerRepository) DeductBalance(customerID string, amount float64) error {
+	customer, exists := r.db[customerID]
+	if !exists {
+		return utils.ErrCustomerNotFound
+	}
+
+	if customer.Balance < amount {
+		return utils.ErrInsufficientBalance
+	}
+
+	customer.Balance -= amount
+	r.db[customerID] = customer
+	return nil
+}

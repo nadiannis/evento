@@ -7,6 +7,8 @@ type ICustomerRepository interface {
 	Add(customer *domain.Customer) (*domain.Customer, error)
 	GetByID(customerID string) (*domain.Customer, error)
 	AddOrder(customerID string, order *domain.Order) error
+	AddBalance(customerID string, amount float64) error
+	DeductBalance(customerID string, amount float64) error
 }
 
 type IEventRepository interface {

@@ -19,6 +19,7 @@ var (
 	ErrTicketTypeAlreadyExists    = errors.New("ticket type already exists")
 	ErrTicketAlreadyExists        = errors.New("ticket already exists for the event")
 	ErrInsufficientTicketQuantity = errors.New("insufficient ticket quantity")
+	ErrInsufficientBalance        = errors.New("insufficient balance")
 )
 
 func errorResponse(w http.ResponseWriter, r *http.Request, status int, message any) {
