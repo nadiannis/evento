@@ -38,7 +38,7 @@ func requestLogger(next http.Handler) http.Handler {
 		duration := fmt.Sprintf("%dns", time.Since(start).Nanoseconds())
 		request := fmt.Sprintf("%s %s %s", r.Proto, r.Method, r.URL.RequestURI())
 		message := utils.GetLogMessage(r.Context())
-		
+
 		status := response.Success
 		logEvent := log.Info()
 		if rw.statusCode >= 400 {

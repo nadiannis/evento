@@ -14,7 +14,7 @@ var ticketTypeInputs = []*request.TicketTypeRequest{
 		Price: 5000,
 	},
 	{
-		Name:  domain.TicketTypeVIP,
+		Name:  domain.TicketTypeCAT1,
 		Price: 250,
 	},
 }

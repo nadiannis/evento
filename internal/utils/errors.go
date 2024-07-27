@@ -15,10 +15,12 @@ var (
 	ErrTicketTypeNotFound         = errors.New("ticket type not found")
 	ErrTicketNotFound             = errors.New("ticket not found")
 	ErrEventNotFound              = errors.New("event not found")
+	ErrOrderNotFound              = errors.New("order not found")
 	ErrCustomerAlreadyExists      = errors.New("customer already exists")
 	ErrTicketTypeAlreadyExists    = errors.New("ticket type already exists")
 	ErrTicketAlreadyExists        = errors.New("ticket already exists for the event")
 	ErrInsufficientTicketQuantity = errors.New("insufficient ticket quantity")
+	ErrInsufficientBalance        = errors.New("insufficient balance")
 )
 
 func errorResponse(w http.ResponseWriter, r *http.Request, status int, message any) {
