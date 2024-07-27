@@ -5,29 +5,65 @@ import (
 	"github.com/nadiannis/evento/internal/domain/request"
 )
 
-type ICustomerUsecase interface {
+type CustomerReader interface {
 	GetAll() []*domain.Customer
+}
+
+type CustomerWriter interface {
 	Add(input *request.CustomerRequest) (*domain.Customer, error)
 	AddBalance(customerID string, input *request.CustomerBalanceRequest) (*domain.Customer, error)
 }
 
-type IEventUsecase interface {
+type ICustomerUsecase interface {
+	CustomerReader
+	CustomerWriter
+}
+
+type EventReader interface {
 	GetAll() []*domain.Event
-	Add(input *request.EventRequest) *domain.Event
 	GetByID(eventID string) (*domain.Event, error)
 }
 
-type ITicketTypeUsecase interface {
+type EventWriter interface {
+	Add(input *request.EventRequest) *domain.Event
+}
+
+type IEventUsecase interface {
+	EventReader
+	EventWriter
+}
+
+type TicketTypeWriter interface {
 	Add(input *request.TicketTypeRequest) (*domain.TicketType, error)
 }
 
-type ITicketUsecase interface {
+type ITicketTypeUsecase interface {
+	TicketTypeWriter
+}
+
+type TicketReader interface {
 	GetAll() []*domain.Ticket
-	Add(input *request.TicketRequest) (*domain.Ticket, error)
 	GetByID(ticketID string) (*domain.Ticket, error)
 }
 
-type IOrderUsecase interface {
+type TicketWriter interface {
+	Add(input *request.TicketRequest) (*domain.Ticket, error)
+}
+
+type ITicketUsecase interface {
+	TicketReader
+	TicketWriter
+}
+
+type OrderReader interface {
 	GetAll() []*domain.Order
+}
+
+type OrderWriter interface {
 	Add(input *request.OrderRequest) (*domain.Order, error)
+}
+
+type IOrderUsecase interface {
+	OrderReader
+	OrderWriter
 }
