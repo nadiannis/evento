@@ -27,10 +27,12 @@ type ITicketRepository interface {
 	GetAll() []*domain.Ticket
 	Add(ticket *domain.Ticket) (*domain.Ticket, error)
 	GetByID(ticketID string) (*domain.Ticket, error)
+	AddQuantity(ticketID string, quantity int) error
 	DeductQuantity(ticketID string, quantity int) error
 }
 
 type IOrderRepository interface {
 	GetAll() []*domain.Order
 	Add(order *domain.Order) *domain.Order
+	DeleteByID(orderID string) error
 }

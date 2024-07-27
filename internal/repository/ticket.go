@@ -42,6 +42,17 @@ func (r *TicketRepository) GetByID(ticketID string) (*domain.Ticket, error) {
 	return nil, utils.ErrTicketNotFound
 }
 
+func (r *TicketRepository) AddQuantity(ticketID string, quantity int) error {
+	ticket, exists := r.db[ticketID]
+	if !exists {
+		return utils.ErrTicketNotFound
+	}
+
+	ticket.Quantity += quantity
+	r.db[ticketID] = ticket
+	return nil
+}
+
 func (r *TicketRepository) DeductQuantity(ticketID string, quantity int) error {
 	ticket, exists := r.db[ticketID]
 	if !exists {

@@ -48,7 +48,8 @@ func (h *OrderHandler) Add(w http.ResponseWriter, r *http.Request) {
 
 	v.Check(input.CustomerID != "", "customer_id", "customer_id is required")
 	v.Check(input.TicketID != "", "ticket_id", "ticket_id is required")
-	v.Check(input.Quantity > 0, "quantity", "quantity should be greater than 0")
+	v.Check(input.Quantity != 0, "quantity", "quantity is required")
+	v.Check(input.Quantity > 0, "quantity", "quantity should not be a negative number")
 
 	if !v.Valid() {
 		utils.FailedValidationResponse(w, r, v.Errors)
@@ -60,7 +61,7 @@ func (h *OrderHandler) Add(w http.ResponseWriter, r *http.Request) {
 		switch {
 		case errors.Is(err, utils.ErrCustomerNotFound) || errors.Is(err, utils.ErrTicketNotFound) || errors.Is(err, utils.ErrTicketTypeNotFound):
 			utils.NotFoundResponse(w, r, err)
-		case errors.Is(err, utils.ErrInsufficientTicketQuantity):
+		case errors.Is(err, utils.ErrInsufficientTicketQuantity) || errors.Is(err, utils.ErrInsufficientBalance):
 			utils.BadRequestResponse(w, r, err)
 		default:
 			utils.ServerErrorResponse(w, r, err)

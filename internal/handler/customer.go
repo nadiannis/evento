@@ -93,7 +93,8 @@ func (h *CustomerHandler) AddBalance(w http.ResponseWriter, r *http.Request) {
 
 	v := utils.NewValidator()
 
-	v.Check(input.Balance > 0, "balance", "balance should be greater than 0")
+	v.Check(input.Balance != 0, "balance", "balance is required")
+	v.Check(input.Balance > 0, "balance", "balance should not be a negative number")
 
 	if !v.Valid() {
 		utils.FailedValidationResponse(w, r, v.Errors)

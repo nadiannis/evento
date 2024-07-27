@@ -50,22 +50,34 @@ func (u *OrderUsecase) Add(input *request.OrderRequest) (*domain.Order, error) {
 		return nil, err
 	}
 
+	err = u.ticketRepository.DeductQuantity(ticket.ID, input.Quantity)
+	if err != nil {
+		return nil, err
+	}
+
+	totalPrice := float64(input.Quantity) * ticketType.Price
+	err = u.customerRepository.DeductBalance(customer.ID, totalPrice)
+	if err != nil {
+		u.ticketRepository.AddQuantity(ticket.ID, input.Quantity)
+
+		return nil, err
+	}
+
 	order := u.orderRepository.Add(&domain.Order{
 		ID:         uuid.NewString(),
 		CustomerID: customer.ID,
 		TicketID:   ticket.ID,
 		Quantity:   input.Quantity,
-		TotalPrice: float64(input.Quantity) * ticketType.Price,
+		TotalPrice: totalPrice,
 		CreatedAt:  time.Now(),
 	})
 
 	err = u.customerRepository.AddOrder(customer.ID, order)
 	if err != nil {
-		return nil, err
-	}
+		u.ticketRepository.AddQuantity(ticket.ID, input.Quantity)
+		u.customerRepository.AddBalance(customer.ID, totalPrice)
+		u.orderRepository.DeleteByID(order.ID)
 
-	err = u.ticketRepository.DeductQuantity(ticket.ID, order.Quantity)
-	if err != nil {
 		return nil, err
 	}
 
