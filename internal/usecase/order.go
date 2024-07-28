@@ -86,4 +86,5 @@ func (u *OrderUsecase) Add(input *request.OrderRequest) (*domain.Order, error) {
 
 func (u *OrderUsecase) DeleteAll() {
 	u.orderRepository.DeleteAll()
+	u.customerRepository.DeleteAllOrders()
 }

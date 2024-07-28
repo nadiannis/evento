@@ -12,6 +12,7 @@ type CustomerWriter interface {
 	AddBalance(customerID string, amount float64) error
 	DeductBalance(customerID string, amount float64) error
 	AddOrder(customerID string, order *domain.Order) error
+	DeleteAllOrders()
 }
 
 type ICustomerRepository interface {

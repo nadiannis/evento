@@ -66,6 +66,12 @@ func (r *CustomerRepository) AddOrder(customerID string, order *domain.Order) er
 	return utils.ErrCustomerNotFound
 }
 
+func (r *CustomerRepository) DeleteAllOrders() {
+	for _, customer := range r.db {
+		customer.Orders = make([]*domain.Order, 0)
+	}
+}
+
 func (r *CustomerRepository) AddBalance(customerID string, amount float64) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
