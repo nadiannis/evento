@@ -4,6 +4,7 @@ import "net/http"
 
 type CustomerReader interface {
 	GetAll(w http.ResponseWriter, r *http.Request)
+	GetByID(w http.ResponseWriter, r *http.Request)
 }
 
 type CustomerWriter interface {
@@ -30,8 +31,13 @@ type TicketReader interface {
 	GetByID(w http.ResponseWriter, r *http.Request)
 }
 
+type TicketWriter interface {
+	AddQuantity(w http.ResponseWriter, r *http.Request)
+}
+
 type ITicketHandler interface {
 	TicketReader
+	TicketWriter
 }
 
 type OrderReader interface {
@@ -40,6 +46,7 @@ type OrderReader interface {
 
 type OrderWriter interface {
 	Add(w http.ResponseWriter, r *http.Request)
+	DeleteAll(w http.ResponseWriter, r *http.Request)
 }
 
 type IOrderHandler interface {

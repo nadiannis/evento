@@ -32,6 +32,15 @@ func (u *CustomerUsecase) Add(input *request.CustomerRequest) (*domain.Customer,
 	return u.repository.Add(customer)
 }
 
+func (u *CustomerUsecase) GetByID(customerID string) (*domain.Customer, error) {
+	customer, err := u.repository.GetByID(customerID)
+	if err != nil {
+		return nil, err
+	}
+
+	return customer, nil
+}
+
 func (u *CustomerUsecase) AddBalance(customerID string, input *request.CustomerBalanceRequest) (*domain.Customer, error) {
 	customer, err := u.repository.GetByID(customerID)
 	if err != nil {

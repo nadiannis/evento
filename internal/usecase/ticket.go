@@ -52,3 +52,17 @@ func (u *TicketUsecase) GetByID(ticketID string) (*domain.Ticket, error) {
 
 	return ticket, nil
 }
+
+func (u *TicketUsecase) AddQuantity(ticketID string, input *request.TicketQuantityRequest) (*domain.Ticket, error) {
+	ticket, err := u.ticketRepository.GetByID(ticketID)
+	if err != nil {
+		return nil, err
+	}
+
+	err = u.ticketRepository.AddQuantity(ticketID, input.Quantity)
+	if err != nil {
+		return nil, err
+	}
+
+	return ticket, nil
+}

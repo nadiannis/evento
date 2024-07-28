@@ -7,3 +7,7 @@ type TicketRequest struct {
 	Type     domain.TicketTypeName `json:"type"`
 	Quantity int                   `json:"quantity"`
 }
+
+type TicketQuantityRequest struct {
+	Quantity int `json:"quantity"`
+}

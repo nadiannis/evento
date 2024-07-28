@@ -80,3 +80,18 @@ func (h *OrderHandler) Add(w http.ResponseWriter, r *http.Request) {
 		utils.ServerErrorResponse(w, r, err)
 	}
 }
+
+func (h *OrderHandler) DeleteAll(w http.ResponseWriter, r *http.Request) {
+	h.usecase.DeleteAll()
+
+	res := response.SuccessResponse{
+		Status:  response.Success,
+		Message: "orders deleted successfully",
+		Data:    nil,
+	}
+
+	err := utils.WriteJSON(w, r, http.StatusOK, res, nil)
+	if err != nil {
+		utils.ServerErrorResponse(w, r, err)
+	}
+}

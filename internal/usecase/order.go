@@ -83,3 +83,7 @@ func (u *OrderUsecase) Add(input *request.OrderRequest) (*domain.Order, error) {
 
 	return order, nil
 }
+
+func (u *OrderUsecase) DeleteAll() {
+	u.orderRepository.DeleteAll()
+}

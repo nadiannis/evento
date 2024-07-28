@@ -13,6 +13,7 @@ func (app *application) routes() http.Handler {
 	})
 
 	mux.HandleFunc("GET /api/customers", app.handlers.Customers.GetAll)
+	mux.HandleFunc("GET /api/customers/{id}", app.handlers.Customers.GetByID)
 	mux.HandleFunc("POST /api/customers", app.handlers.Customers.Add)
 	mux.HandleFunc("PATCH /api/customers/{id}/balances", app.handlers.Customers.AddBalance)
 
@@ -21,9 +22,11 @@ func (app *application) routes() http.Handler {
 
 	mux.HandleFunc("GET /api/tickets", app.handlers.Tickets.GetAll)
 	mux.HandleFunc("GET /api/tickets/{id}", app.handlers.Tickets.GetByID)
+	mux.HandleFunc("PATCH /api/tickets/{id}/quantities", app.handlers.Tickets.AddQuantity)
 
 	mux.HandleFunc("GET /api/orders", app.handlers.Orders.GetAll)
 	mux.HandleFunc("POST /api/orders", app.handlers.Orders.Add)
+	mux.HandleFunc("DELETE /api/orders", app.handlers.Orders.DeleteAll)
 
 	return requestLogger(mux)
 }
