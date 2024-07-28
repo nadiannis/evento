@@ -12,6 +12,7 @@
 - [Entities](#entities)
 - [API Endpoints](#api-endpoints)
 - [Run Locally](#run-locally)
+- [Screenshots](#screenshots)
 
 ## Description
 
@@ -120,3 +121,29 @@ There are 5 entities: **Customer**, **TicketType**, **Event**, **Ticket**, & **O
   ```bash
   go run ./cmd
   ```
+
+# Screenshots
+
+### Add a new customer
+
+![Add a new customer](./docs/img/customer-add.png)
+
+### View an event with the tickets available
+
+![View an event](./docs/img/event-get.png)
+
+### Order a ticket (success)
+
+![Order a ticket (success)](./docs/img/order-success.png)
+
+### Order a ticket (ticket out of stock)
+
+![Order a ticket (ticket out of stock)](./docs/img/order-error-1.png)
+
+### Order a ticket (insufficient balance)
+
+![Order a ticket (insufficient balance)](./docs/img/order-error-2.png)
+
+### Log
+
+![Log](./docs/img/log.png)
