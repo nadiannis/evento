@@ -1,12 +1,15 @@
 package repository
 
 import (
+	"sync"
+
 	"github.com/nadiannis/evento/internal/domain"
 	"github.com/nadiannis/evento/internal/utils"
 )
 
 type EventRepository struct {
 	db map[string]*domain.Event
+	mu sync.Mutex
 }
 
 func NewEventRepository() IEventRepository {
@@ -16,6 +19,9 @@ func NewEventRepository() IEventRepository {
 }
 
 func (r *EventRepository) GetAll() []*domain.Event {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
 	events := make([]*domain.Event, 0)
 	for _, event := range r.db {
 		events = append(events, event)
@@ -24,11 +30,17 @@ func (r *EventRepository) GetAll() []*domain.Event {
 }
 
 func (r *EventRepository) Add(event *domain.Event) *domain.Event {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
 	r.db[event.ID] = event
 	return event
 }
 
 func (r *EventRepository) GetByID(eventID string) (*domain.Event, error) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
 	if event, exists := r.db[eventID]; exists {
 		return event, nil
 	}
@@ -37,6 +49,9 @@ func (r *EventRepository) GetByID(eventID string) (*domain.Event, error) {
 }
 
 func (r *EventRepository) AddTicket(eventID string, ticket *domain.Ticket) (*domain.Ticket, error) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
 	if event, exists := r.db[eventID]; exists {
 		event.Tickets[ticket.Type] = ticket
 		return ticket, nil

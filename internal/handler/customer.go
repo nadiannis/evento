@@ -123,3 +123,29 @@ func (h *CustomerHandler) AddBalance(w http.ResponseWriter, r *http.Request) {
 		utils.ServerErrorResponse(w, r, err)
 	}
 }
+
+func (h *CustomerHandler) GetByID(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+
+	customer, err := h.usecase.GetByID(id)
+	if err != nil {
+		switch {
+		case errors.Is(err, utils.ErrCustomerNotFound):
+			utils.NotFoundResponse(w, r, err)
+		default:
+			utils.ServerErrorResponse(w, r, err)
+		}
+		return
+	}
+
+	res := response.SuccessResponse{
+		Status:  response.Success,
+		Message: "customer retrieved successfully",
+		Data:    customer,
+	}
+
+	err = utils.WriteJSON(w, r, http.StatusOK, res, nil)
+	if err != nil {
+		utils.ServerErrorResponse(w, r, err)
+	}
+}

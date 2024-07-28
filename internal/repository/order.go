@@ -1,12 +1,15 @@
 package repository
 
 import (
+	"sync"
+
 	"github.com/nadiannis/evento/internal/domain"
 	"github.com/nadiannis/evento/internal/utils"
 )
 
 type OrderRepository struct {
 	db map[string]*domain.Order
+	mu sync.Mutex
 }
 
 func NewOrderRepository() IOrderRepository {
@@ -16,6 +19,9 @@ func NewOrderRepository() IOrderRepository {
 }
 
 func (r *OrderRepository) GetAll() []*domain.Order {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
 	orders := make([]*domain.Order, 0)
 	for _, order := range r.db {
 		orders = append(orders, order)
@@ -24,15 +30,30 @@ func (r *OrderRepository) GetAll() []*domain.Order {
 }
 
 func (r *OrderRepository) Add(order *domain.Order) *domain.Order {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
 	r.db[order.ID] = order
 	return order
 }
 
 func (r *OrderRepository) DeleteByID(orderID string) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
 	if _, exists := r.db[orderID]; !exists {
 		return utils.ErrOrderNotFound
 	}
 
 	delete(r.db, orderID)
 	return nil
+}
+
+func (r *OrderRepository) DeleteAll() {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
+	for orderID := range r.db {
+		delete(r.db, orderID)
+	}
 }

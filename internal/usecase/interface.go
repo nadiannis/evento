@@ -7,6 +7,7 @@ import (
 
 type CustomerReader interface {
 	GetAll() []*domain.Customer
+	GetByID(customerID string) (*domain.Customer, error)
 }
 
 type CustomerWriter interface {
@@ -48,6 +49,7 @@ type TicketReader interface {
 
 type TicketWriter interface {
 	Add(input *request.TicketRequest) (*domain.Ticket, error)
+	AddQuantity(ticketID string, input *request.TicketQuantityRequest) (*domain.Ticket, error)
 }
 
 type ITicketUsecase interface {
@@ -61,6 +63,7 @@ type OrderReader interface {
 
 type OrderWriter interface {
 	Add(input *request.OrderRequest) (*domain.Order, error)
+	DeleteAll()
 }
 
 type IOrderUsecase interface {

@@ -70,6 +70,7 @@ type OrderReader interface {
 type OrderWriter interface {
 	Add(order *domain.Order) *domain.Order
 	DeleteByID(orderID string) error
+	DeleteAll()
 }
 
 type IOrderRepository interface {
