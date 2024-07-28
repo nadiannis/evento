@@ -122,7 +122,9 @@ There are 5 entities: **Customer**, **TicketType**, **Event**, **Ticket**, & **O
   go run ./cmd
   ```
 
-# Screenshots
+## Screenshots
+
+[`^ back to top ^`](#table-of-contents)
 
 ### Add a new customer
 
